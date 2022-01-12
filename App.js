@@ -6,6 +6,7 @@ import {
   TextInput,
   Text,
   FlatList,
+  TouchableOpacity,
 } from 'react-native';
 
 export default function App() {
@@ -19,13 +20,25 @@ export default function App() {
       { key: id, value: inputGoal },
     ]);
     setId((previousState) => previousState + 1);
+    setInputGoal('');
+  };
+
+  const deleteGoal = (id) => {
+    setGoalList((previousGoals) =>
+      previousGoals.filter((goals) => goals.key !== id)
+    );
   };
 
   const renderItem = ({ item }) => {
     return (
-      <View style={styles.goalList}>
-        <Text style={styles.goal}>{item.value}</Text>
-      </View>
+      <TouchableOpacity
+        onPress={() => {
+          deleteGoal(item.key);
+        }}>
+        <View style={styles.goalList}>
+          <Text style={styles.goal}>{item.value}</Text>
+        </View>
+      </TouchableOpacity>
     );
   };
 
